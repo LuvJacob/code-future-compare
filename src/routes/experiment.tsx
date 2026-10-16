@@ -21,7 +21,7 @@ type Phase = "idle" | "running" | "done";
 function Experiment() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("traditional");
-  const [problemId, setProblemId] = useState(PROBLEMS[0].id);
+  const [problemId, setProblemId] = useState("reverse-string");
   const problem = PROBLEMS.find((p) => p.id === problemId)!;
   const [code, setCode] = useState(problem.signature);
   const [phase, setPhase] = useState<Phase>("idle");
