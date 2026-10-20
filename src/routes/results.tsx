@@ -61,6 +61,7 @@ function Results() {
                   <div><p className="text-xs text-muted-foreground">Trials</p><p className="font-mono text-2xl">{s.n}</p></div>
                   <div><p className="text-xs text-muted-foreground">Completion</p><p className="font-mono text-2xl">{s.rate === null ? "—" : `${s.rate}%`}</p></div>
                   <div><p className="text-xs text-muted-foreground">Avg time (done)</p><p className="font-mono text-2xl">{s.avg === null ? "—" : fmt(s.avg)}</p></div>
+                  <div><p className="text-xs text-muted-foreground">Test pass rate</p><p className="font-mono text-2xl">{s.testRate === null ? "—" : `${s.testRate}%`}</p></div>
                 </div>
               </div>
             );
@@ -86,6 +87,9 @@ function Results() {
                     <td className="px-4 py-3 font-mono">{fmt(r.elapsedSec)}</td>
                     <td className="px-4 py-3 font-mono">{r.runCodeAttempts ?? r.attempts}</td>
                     <td className="px-4 py-3 font-mono">{r.mode === "ai" ? r.hintsViewed : "n/a"}</td>
+                    <td className="whitespace-nowrap px-4 py-3 font-mono">{r.totalTestCases === 3 ? `${r.testCasesPassed ?? 0} / 3` : "Not recorded"}</td>
+                    <td className="px-4 py-3">{r.lastExecutionHadError === undefined ? "—" : r.lastExecutionHadError ? "Yes" : "No"}</td>
+                    <td className="px-4 py-3 font-mono">{typeof r.timeToSuccessfulSubmissionSec === "number" ? fmt(r.timeToSuccessfulSubmissionSec) : "—"}</td>
                     <td className="px-4 py-3">
                       <span className={`rounded-full px-2 py-0.5 text-xs ${r.status === "completed" ? "bg-success text-success-foreground" : "bg-secondary text-foreground"}`}>{statusText[r.status]}</span>
                     </td>
