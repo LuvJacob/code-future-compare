@@ -10,7 +10,7 @@ export const Route = createFileRoute("/experiment")({
       { title: "Experiment Workspace — From English to Executable" },
       { name: "description", content: "Timed coding challenge in Traditional (2016) or AI-Assisted (2026) mode." },
       { property: "og:title", content: "Experiment Workspace — CSC 4330" },
-      { property: "og:description", content: "Solve a timed JavaScript challenge with or without an assistant." },
+      { property: "og:description", content: "Solve a timed Python 3 challenge with or without an assistant." },
     ],
   }),
   component: Experiment,
