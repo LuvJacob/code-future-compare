@@ -48,7 +48,7 @@ function Index() {
           <div className="rounded-lg border bg-card p-6">
             <p className="font-mono text-xs text-muted-foreground">Condition B</p>
             <h2 className="mt-1 font-serif text-2xl">AI-Assisted Programming (2026)</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Same workspace plus an assistant sidebar. In this MVP it shows predefined demo hints; Gemini API integration is planned.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Same workspace plus a live Gemini AI Assistant below the editor that generates Python code you can copy into the editor.</p>
           </div>
         </section>
 
@@ -61,7 +61,7 @@ function Index() {
             <li>Submit after all three tests pass, or choose Did Not Finish. Results are saved in this browser.</li>
           </ol>
           <p className="mt-4 text-xs text-muted-foreground">
-            Python runs in this browser. Completion is verified against the three displayed test cases; predefined hints are not live AI.
+            Python runs in this browser. Completion is verified against the three displayed test cases; Gemini output is never auto-graded or auto-submitted.
           </p>
         </section>
       </main>

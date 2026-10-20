@@ -6,7 +6,6 @@ export interface Problem {
   prompt: string;
   signature: string;
   examples: { input: string; output: string }[];
-  hints: string[];
 }
 
 export const PROBLEMS: Problem[] = [
@@ -21,12 +20,6 @@ export const PROBLEMS: Problem[] = [
       { input: 'reverse_string("CSC 4330")', output: '"0334 CSC"' },
       { input: 'reverse_string("")', output: '""' },
     ],
-    hints: [
-      "Strings in Python are immutable — consider building a new string or list.",
-      "One approach: Python slicing with a negative step, s[::-1], reverses a string in one expression.",
-      "Alternative: loop from the last index (len(s) - 1) down to 0, appending each character to a list, then use \"\".join(...).",
-      "Edge case: an empty string should return an empty string.",
-    ],
   },
   {
     id: "array-max",
@@ -38,12 +31,6 @@ export const PROBLEMS: Problem[] = [
       { input: "find_max([3, 7, 2, 9, 4])", output: "9" },
       { input: "find_max([-5, -1, -12])", output: "-1" },
       { input: "find_max([42])", output: "42" },
-    ],
-    hints: [
-      "Initialize a variable with the first element (nums[0]) rather than 0 — think about all-negative lists.",
-      "Iterate through the remaining elements and compare each to your current maximum.",
-      "A for loop over the list (for n in nums:) or an indexed loop with range(len(nums)) both work here.",
-      "Python's indexing and len() make this solvable in just a few lines without max().",
     ],
   },
 ];
