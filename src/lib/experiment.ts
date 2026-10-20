@@ -62,6 +62,11 @@ export interface ResultRecord {
   hintsViewed: number;
   status: Status;
   finishedAt: string;
+  testCasesPassed?: number;
+  totalTestCases?: 3;
+  lastExecutionHadError?: boolean;
+  runCodeAttempts?: number;
+  timeToSuccessfulSubmissionSec?: number | null;
 }
 
 const KEY = "csc4330-experiment-results";
@@ -69,14 +74,18 @@ const KEY = "csc4330-experiment-results";
 export function loadResults(): ResultRecord[] {
   if (typeof window === "undefined") return [];
   try {
-    return JSON.parse(localStorage.getItem(KEY) || "[]");
+    const value: unknown = JSON.parse(localStorage.getItem(KEY) || "[]");
+    if (!Array.isArray(value)) return [];
+    return value.filter((row): row is ResultRecord => Boolean(row && typeof row === "object" && typeof row.id === "string" && typeof row.problemTitle === "string" && ["traditional", "ai"].includes(row.mode) && ["completed", "did-not-finish", "timed-out"].includes(row.status) && Number.isFinite(row.elapsedSec) && Number.isFinite(row.attempts) && typeof row.finishedAt === "string"));
   } catch {
     return [];
   }
 }
 
 export function saveResult(r: ResultRecord) {
-  localStorage.setItem(KEY, JSON.stringify([...loadResults(), r]));
+  const rows = loadResults();
+  if (rows.some((row) => row.id === r.id)) return;
+  localStorage.setItem(KEY, JSON.stringify([...rows, r]));
 }
 
 export function clearResults() {
