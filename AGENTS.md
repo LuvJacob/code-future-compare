@@ -13,3 +13,4 @@
 - Keep test definitions and completion rules in browser-safe shared modules so both experiment modes use the same validation.
 - Load Monaco dynamically after mount and bundle its browser workers locally to keep browser APIs outside SSR and preserve offline editor assets.
 - Extend LocalStorage result records with optional analytics fields so legacy records remain readable without inventing historical test results.
+- Call Gemini only from the server function in src/lib/gemini.functions.ts with trusted per-challenge restrictions; enforce challenge restrictions via AST checks in the shared Python harness so comments/strings never trigger false positives.
