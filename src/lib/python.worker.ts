@@ -13,7 +13,7 @@ self.onmessage = async (event: MessageEvent<{ type: string; code: string; functi
       return;
     }
     if (!runtime) throw new Error("Python is not initialized");
-    runtime.globals.set("_request_json", JSON.stringify(event.data));
+    runtime.globals['set']("_request_json", JSON.stringify(event.data));
     const json = await runtime.runPythonAsync(PYTHON_HARNESS);
     self.postMessage({ type: "result", result: JSON.parse(String(json)) });
   } catch (error) {

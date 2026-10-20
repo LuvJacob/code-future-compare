@@ -16,7 +16,7 @@ export function CodeEditor({
     <div className="code-surface relative h-[420px] overflow-hidden rounded-md border">
       <ClientOnly fallback={<p className="p-4 text-muted-foreground">Loading editor…</p>}>
         <Suspense fallback={<p className="p-4 text-muted-foreground">Loading editor…</p>}>
-          <MonacoPython value={value} onChange={onChange} disabled={disabled} />
+          <MonacoPython value={value} onChange={onChange} disabled={Boolean(disabled)} />
         </Suspense>
       </ClientOnly>
     </div>

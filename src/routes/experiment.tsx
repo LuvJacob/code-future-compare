@@ -30,7 +30,7 @@ function Experiment() {
   const [mode, setMode] = useState<Mode>("traditional");
   const [problemId, setProblemId] = useState("reverse-string");
   const problem = PROBLEMS.find((p) => p.id === problemId) ?? PROBLEMS[0];
-  const [code, setCode] = useState(problem.signature);
+  const [code, setCode] = useState(problem?.signature ?? "");
   const [phase, setPhase] = useState<Phase>("idle");
   const [elapsed, setElapsed] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -76,7 +76,7 @@ function Experiment() {
     setAttempts(0);
     setHintsShown(0);
     setLog([]);
-    setCode((PROBLEMS.find((p) => p.id === pid) ?? PROBLEMS[0]).signature);
+    setCode((PROBLEMS.find((p) => p.id === pid) ?? PROBLEMS[0])?.signature ?? "");
   };
 
   const start = () => {
@@ -87,7 +87,7 @@ function Experiment() {
   };
 
   const run = async () => {
-    if (!activeRef.current || busyRef.current) return;
+    if (!activeRef.current || busyRef.current || !tests) return;
     if (Date.now() - startRef.current >= TIME_LIMIT_SEC * 1000) { finish("timed-out", TIME_LIMIT_SEC); return; }
     busyRef.current = true;
     setBusy(true);
@@ -125,7 +125,7 @@ function Experiment() {
   };
 
   function finish(status: Status, el?: number) {
-    if (!activeRef.current) return;
+    if (!activeRef.current || !problem) return;
     const measured = Math.floor((Date.now() - startRef.current) / 1000);
     if (measured >= TIME_LIMIT_SEC) { status = "timed-out"; el = TIME_LIMIT_SEC; }
     if (status === "completed" && (busyRef.current || !canSubmit(resultsRef.current, testedCode, code))) return;
@@ -159,6 +159,8 @@ function Experiment() {
   const remaining = TIME_LIMIT_SEC - elapsed;
   const running = phase === "running";
 
+  if (!problem || !tests) return <p>Challenge unavailable.</p>;
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -169,7 +171,7 @@ function Experiment() {
             <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">Mode</p>
             <div className="flex flex-wrap rounded-md border p-0.5">
               {(["traditional", "ai"] as Mode[]).map((m) => (
-                <Button key={m} disabled={running} onClick={() => { setMode(m); reset(); }}
+                <Button key={m} variant="ghost" disabled={running} onClick={() => { setMode(m); reset(); }}
                   className={`rounded px-3 py-1.5 text-sm disabled:opacity-50 ${mode === m ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
                   {modeLabel(m)}
                 </Button>
@@ -180,7 +182,7 @@ function Experiment() {
             <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">Problem</p>
             <div className="flex flex-wrap rounded-md border p-0.5">
               {PROBLEMS.map((p) => (
-                <Button key={p.id} disabled={running} onClick={() => { setProblemId(p.id); reset(p.id); }}
+                <Button key={p.id} variant="ghost" disabled={running} onClick={() => { setProblemId(p.id); reset(p.id); }}
                   className={`rounded px-3 py-1.5 text-sm disabled:opacity-50 ${problemId === p.id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
                   {p.title}
                 </Button>

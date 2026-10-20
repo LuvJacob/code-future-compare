@@ -24,7 +24,7 @@ describe("Classroom experiment rules", () => {
   it("preserves old saved records without inventing test scores", () => {
     localStorage.setItem("csc4330-experiment-results", JSON.stringify([old]));
     expect(loadResults()).toEqual([old]);
-    expect(loadResults()[0].testCasesPassed).toBeUndefined();
+    expect(loadResults()[0]?.testCasesPassed).toBeUndefined();
   });
   it("saves a trial only once for the same id", () => {
     saveResult(old); saveResult(old);

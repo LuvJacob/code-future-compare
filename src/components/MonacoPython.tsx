@@ -6,7 +6,7 @@ loader.config({ monaco });
 let configured = false;
 
 const configure: BeforeMount = (api) => {
-  globalThis.MonacoEnvironment = { getWorker: () => new EditorWorker() };
+  (globalThis as typeof globalThis & { MonacoEnvironment: monaco.Environment }).MonacoEnvironment = { getWorker: () => new EditorWorker() };
   if (configured) return;
   configured = true;
   api.languages.setLanguageConfiguration("python", {
@@ -35,5 +35,5 @@ export default function MonacoPython({ value, onChange, disabled }: { value: str
   const mount: OnMount = (editor) => {
     editor.getModel()?.updateOptions({ tabSize: 4, indentSize: 4, insertSpaces: true });
   };
-  return <Editor height="420px" language="python" theme="vs-dark" value={value} beforeMount={configure} onMount={mount} onChange={(v) => onChange(v ?? "")} loading={<p className="p-4 text-muted-foreground">Loading editor…</p>} options={{ readOnly: disabled, ariaLabel: "Python code editor", fontFamily: "IBM Plex Mono, monospace", fontSize: 14, minimap: { enabled: false }, lineNumbers: "on", tabSize: 4, insertSpaces: true, detectIndentation: false, autoIndent: "full", autoClosingBrackets: "always", autoClosingQuotes: "always", matchBrackets: "always", bracketPairColorization: { enabled: true }, wordBasedSuggestions: "currentDocument", quickSuggestions: { other: true, comments: false, strings: false }, automaticLayout: true, scrollBeyondLastLine: false, padding: { top: 16, bottom: 16 } }} />;
+  return <Editor height="420px" language="python" theme="vs-dark" value={value} beforeMount={configure} onMount={mount} onChange={(v) => onChange(v ?? "")} loading={<p className="p-4 text-muted-foreground">Loading editor…</p>} options={{ readOnly: Boolean(disabled), ariaLabel: "Python code editor", fontFamily: "IBM Plex Mono, monospace", fontSize: 14, minimap: { enabled: false }, lineNumbers: "on", tabSize: 4, insertSpaces: true, detectIndentation: false, autoIndent: "full", autoClosingBrackets: "always", autoClosingQuotes: "always", matchBrackets: "always", bracketPairColorization: { enabled: true }, wordBasedSuggestions: "currentDocument", quickSuggestions: { other: true, comments: false, strings: false }, automaticLayout: true, scrollBeyondLastLine: false, padding: { top: 16, bottom: 16 } }} />;
 }
