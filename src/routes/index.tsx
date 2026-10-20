@@ -6,6 +6,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "From English to Executable: AI in the Programming Language Loop" },
       { name: "description", content: "A CSC 4330 experiment comparing 2016 traditional programming with 2026 AI-assisted programming workflows." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "From English to Executable — CSC 4330" },
       { property: "og:description", content: "Compare traditional and AI-assisted programming workflows in a timed coding experiment." },
     ],
@@ -55,11 +57,11 @@ function Index() {
           <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
             <li>Choose a mode and a problem.</li>
             <li>Press Start — a 10-minute countdown begins.</li>
-            <li>Use Record Attempt each time you consider a solution ready to check.</li>
-            <li>Finish with Mark Complete or Did Not Finish. Results are saved in this browser.</li>
+            <li>Use Run Code to execute your Python solution against the three test cases.</li>
+            <li>Submit after all three tests pass, or choose Did Not Finish. Results are saved in this browser.</li>
           </ol>
           <p className="mt-4 text-xs text-muted-foreground">
-            Note: code is not executed or auto-graded in this version. Completion is self-reported.
+            Python runs in this browser. Completion is verified against the three displayed test cases; predefined hints are not live AI.
           </p>
         </section>
       </main>
