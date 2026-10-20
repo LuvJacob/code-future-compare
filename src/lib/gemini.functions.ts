@@ -49,7 +49,7 @@ export const generatePythonSolution = createServerFn({ method: "POST" })
     const rules = RESTRICTIONS[data.problemId];
     if (!problem || !rules) return { ok: false, error: "Unknown challenge." };
     const apiKey = process.env["GEMINI_API_KEY"];
-    if (!apiKey) return { ok: false, error: "Gemini API not configured." };
+    if (!apiKey || !/^[\x21-\x7e]+$/.test(apiKey.trim())) return { ok: false, error: "Gemini API not configured." };
 
     const { getRequestHeader } = await import("@tanstack/react-start/server");
     const ip = getRequestHeader("cf-connecting-ip") ?? getRequestHeader("x-forwarded-for") ?? "anon";
@@ -70,7 +70,7 @@ export const generatePythonSolution = createServerFn({ method: "POST" })
     try {
       res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
         method: "POST",
-        headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
+        headers: { "content-type": "application/json", "x-goog-api-key": apiKey.trim() },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: system }] },
           contents: [{ role: "user", parts: [{ text: prompt }] }],
