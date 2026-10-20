@@ -204,7 +204,7 @@ function Experiment() {
                 <thead><tr className="text-xs text-muted-foreground"><th className="pb-1 font-normal">Input</th><th className="pb-1 font-normal">Expected output</th></tr></thead>
                 <tbody>
                   {problem.examples.map((ex) => (
-                    <tr key={ex.input} className="border-t"><td className="break-all py-1.5">{ex.input}</td><td className="break-all py-1.5">{ex.output}</td></tr>
+                    <tr key={ex.input} className="border-t"><td className="break-all py-1.5 pr-4">{ex.input}</td><td className="break-all py-1.5">{ex.output}</td></tr>
                   ))}
                 </tbody>
               </table>
