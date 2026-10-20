@@ -1,9 +1,9 @@
 import { useRef } from "react";
 
 const KW =
-  /\b(function|return|const|let|var|for|while|if|else|of|in|new|true|false|null|undefined)\b/;
+  /\b(def|return|if|elif|else|for|while|in|and|or|not|True|False|None|pass|import|from|class|lambda|with|as|try|except|finally|raise|break|continue|is|del|global|nonlocal|assert|yield)\b/;
 const TOKEN =
-  /(\/\/.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|(\b[A-Za-z_]\w*\b)/gm;
+  /(#[^\n]*)|("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|(\b[A-Za-z_]\w*\b)/gm;
 
 function esc(s: string) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -45,7 +45,7 @@ export function CodeEditor({
         dangerouslySetInnerHTML={{ __html: highlight(value) }}
       />
       <textarea
-        aria-label="JavaScript code editor"
+        aria-label="Python code editor"
         spellCheck={false}
         disabled={disabled}
         value={value}
@@ -61,9 +61,9 @@ export function CodeEditor({
             e.preventDefault();
             const t = e.currentTarget;
             const s = t.selectionStart;
-            const v = value.slice(0, s) + "  " + value.slice(t.selectionEnd);
+            const v = value.slice(0, s) + "    " + value.slice(t.selectionEnd);
             onChange(v);
-            requestAnimationFrame(() => (t.selectionStart = t.selectionEnd = s + 2));
+            requestAnimationFrame(() => (t.selectionStart = t.selectionEnd = s + 4));
           }
         }}
         className="code-layer code-input absolute inset-0 resize-none disabled:cursor-not-allowed"
